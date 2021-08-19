@@ -1,8 +1,8 @@
 {
-  "name": "exampleproject",
-  "version-string": "1.0.0",
-  "description": "An example project built using CommonLibSSE",
-  "homepage": "https://github.com/Ryan-rsm-McKenzie/ExamplePlugin-CommonLibSSE",
+  "name": "auto-walk",
+  "version-string": "1.2.0",
+  "description": "Makes the player walk to custom destination using AI pathfinding",
+  "homepage": "https://github.com/zax-ftw/AutoWalk",
   "license": "MIT",
   "dependencies": [
     "boost-atomic",

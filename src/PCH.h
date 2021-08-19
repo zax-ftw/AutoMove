@@ -3,18 +3,18 @@
 #include "RE/Skyrim.h"
 #include "SKSE/SKSE.h"
 
-#pragma warning(push)
-#ifdef NDEBUG
-#	include <spdlog/sinks/basic_file_sink.h>
-#else
-#	include <spdlog/sinks/msvc_sink.h>
-#endif
-#pragma warning(pop)
+#include <type_traits>
+
+#include "spdlog/sinks/basic_file_sink.h"
 
 using namespace std::literals;
+
+using namespace SKSE;
+using namespace RE;
+using namespace REL;
 
 namespace logger = SKSE::log;
 
 #define DLLEXPORT __declspec(dllexport)
 
-#include "Version.h"
+#include "config.h"

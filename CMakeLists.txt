@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 # ---- Options ----
 
-option(COPY_BUILD "Copy the build output to the Skyrim directory." OFF)
+option(COPY_BUILD "Copy the build output to the Skyrim directory." ON)
 
 # ---- Cache build vars ----
 
@@ -12,12 +12,13 @@ macro(set_from_environment VARIABLE)
 	endif ()
 endmacro()
 
+set_from_environment(CommonLibSSEPath)
 set_from_environment(Skyrim64Path)
 set_from_environment(VCPKG_ROOT)
 
 if (DEFINED VCPKG_ROOT)
 	set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
-	set(VCPKG_TARGET_TRIPLET "x64-windows-static" CACHE STRING "")
+	set(VCPKG_TARGET_TRIPLET "x64-windows-static-md" CACHE STRING "")
 else ()
 	message(
 		WARNING
@@ -25,20 +26,19 @@ else ()
 	)
 endif ()
 
-set(Boost_USE_STATIC_RUNTIME OFF CACHE BOOL "")
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STRING "")
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL" CACHE STRING "")
 
 # ---- Project ----
 
 project(
-	ExampleProject
-	VERSION 1.0.0
+	AutoWalk
+	VERSION 1.2.0
 	LANGUAGES CXX
 )
 
 configure_file(
-	${CMAKE_CURRENT_SOURCE_DIR}/cmake/Version.h.in
-	${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
+	${CMAKE_CURRENT_SOURCE_DIR}/cmake/config.h.in
+	${CMAKE_CURRENT_BINARY_DIR}/config.h
 	@ONLY
 )
 
@@ -74,34 +74,43 @@ endif ()
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_DEBUG OFF)
 
+set(Boost_USE_STATIC_RUNTIME OFF)
 set(Boost_USE_STATIC_LIBS ON)
-
 
 # ---- Dependencies ----
 
-add_subdirectory("extern/CommonLibSSE" CommonLibSSE)
+if (DEFINED CommonLibSSEPath AND NOT ${CommonLibSSEPath} STREQUAL "")
+	add_subdirectory(${CommonLibSSEPath} CommonLibSSE)
+else ()
+	message(
+		FATAL_ERROR
+		"Variable CommonLibSSEPath is not defined."
+	)
+endif ()
 
 find_package(spdlog REQUIRED CONFIG)
 
 # ---- Add source files ----
 
-set(SOURCES
-	src/main.cpp
+set(HEADERS
 	src/PCH.h
 )
 
-source_group(
-	TREE
-		${CMAKE_CURRENT_SOURCE_DIR}
-	FILES
-		${SOURCES}
+set(SOURCES
+	src/main.cpp
 )
 
 source_group(
-	TREE
-		${CMAKE_CURRENT_BINARY_DIR}
+	TREE ${CMAKE_CURRENT_SOURCE_DIR}
 	FILES
-		${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
+		${SOURCES}
+		${HEADERS}
+)
+
+source_group(
+	TREE ${CMAKE_CURRENT_BINARY_DIR}
+	FILES
+		${CMAKE_CURRENT_BINARY_DIR}/config.h
 )
 
 # ---- Create DLL ----
@@ -109,8 +118,9 @@ source_group(
 add_library(
 	${PROJECT_NAME}
 	SHARED
+	${HEADERS}
 	${SOURCES}
-	${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
+	${CMAKE_CURRENT_BINARY_DIR}/config.h
 	${CMAKE_CURRENT_BINARY_DIR}/version.rc
 	.clang-format
 	.editorconfig
@@ -125,7 +135,7 @@ target_compile_features(
 target_include_directories(
 	${PROJECT_NAME}
 	PRIVATE
-		${CMAKE_CURRENT_BINARY_DIR}/include
+		${CMAKE_CURRENT_BINARY_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
@@ -197,7 +207,7 @@ target_precompile_headers(
 # ---- Post build ----
 
 if (COPY_BUILD)
-	if (DEFINED Skyrim64Path)
+	if (DEFINED Skyrim64Path AND NOT ${Skyrim64Path} STREQUAL "")
 		add_custom_command(
 			TARGET ${PROJECT_NAME}
 			POST_BUILD

@@ -1,35 +1,28 @@
+
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
 {
-#ifndef NDEBUG
-	auto sink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
-#else
-	auto path = logger::log_directory();
-	if (!path) {
-		return false;
-	}
+	char file[50];
+	sprintf_s(file, sizeof(file), "%s.log", PLUGIN_NAME);
 
-	*path /= Version::PROJECT;
-	*path += ".log"sv;
-	auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
-#endif
-
-	auto log = std::make_shared<spdlog::logger>("global log"s, std::move(sink));
+	auto path = logger::log_directory().value() / file;
+	auto log = spdlog::basic_logger_mt("logger", path.string(), true);
 
 #ifndef NDEBUG
 	log->set_level(spdlog::level::trace);
+	log->flush_on(spdlog::level::trace);
 #else
 	log->set_level(spdlog::level::info);
-	log->flush_on(spdlog::level::warn);
+	log->flush_on(spdlog::level::info);
 #endif
 
-	spdlog::set_default_logger(std::move(log));
-	spdlog::set_pattern("%g(%#): [%^%l%$] %v"s);
+	spdlog::set_default_logger(log);
+	spdlog::set_pattern("[%l] %v");
 
-	logger::info(FMT_STRING("{} v{}"), Version::PROJECT, Version::NAME);
+	logger::info("{} v{}", PLUGIN_NAME, PLUGIN_VERSION);
 
 	a_info->infoVersion = SKSE::PluginInfo::kVersion;
-	a_info->name = Version::PROJECT.data();
-	a_info->version = Version::MAJOR;
+	a_info->name = PLUGIN_NAME;
+	a_info->version = VERSION_MAJOR;
 
 	if (a_skse->IsEditor()) {
 		logger::critical("Loaded in editor, marking as incompatible"sv);
@@ -38,7 +31,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 
 	const auto ver = a_skse->RuntimeVersion();
 	if (ver < SKSE::RUNTIME_1_5_39) {
-		logger::critical(FMT_STRING("Unsupported runtime version {}"), ver.string());
+		logger::critical("Unsupported runtime version {}", ver.string());
 		return false;
 	}
 
@@ -47,9 +40,10 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
-	logger::info("loaded");
+	logger::info("Loading...");
 
 	SKSE::Init(a_skse);
+	SKSE::AllocTrampoline(64);
 
 	return true;
 }
