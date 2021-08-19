@@ -94,10 +94,12 @@ find_package(spdlog REQUIRED CONFIG)
 
 set(HEADERS
 	src/PCH.h
+	src/Papyrus.h
 )
 
 set(SOURCES
 	src/main.cpp
+	src/Papyrus.cpp
 )
 
 source_group(
