@@ -96,6 +96,7 @@ set(HEADERS
 	src/PCH.h
 	src/Offsets.h
 	src/Papyrus.h
+	src/Events.h
 	src/Extended/TESObjectREFR.h	 
 	src/Extended/PlacePlayerMarkerCallbackFunctor.h 
 	src/Extended/FastTravelConfirmCallback.h
@@ -106,6 +107,7 @@ set(HEADERS
 set(SOURCES
 	src/main.cpp
 	src/Papyrus.cpp
+	src/Events.cpp
 	src/Extended/TESObjectREFR.cpp
 	src/Hooks/CameraState.cpp
 	src/Hooks/MessageBox.cpp

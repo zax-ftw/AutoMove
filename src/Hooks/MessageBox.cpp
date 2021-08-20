@@ -1,10 +1,14 @@
 #include "Hooks/MessageBox.h"
 #include "Offsets.h"
+#include "Events.h"
 
 // 0 move, 1 leave, 2 remove
 void PlaceMarkerHook::Run(PlacePlayerMarkerCallbackFunctor* a_this, Message a_msg)
 {
 	logger::trace("PlaceMarkerHook: {}", a_msg);
+
+	OnCustomMarkerChangeRegSet::GetSingleton()->QueueEvent(
+		static_cast<std::underlying_type_t<Message>>(a_msg));
 
 	_Run(a_this, a_msg);
 }
