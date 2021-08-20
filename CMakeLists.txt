@@ -94,12 +94,17 @@ find_package(spdlog REQUIRED CONFIG)
 
 set(HEADERS
 	src/PCH.h
+	src/Offsets.h
 	src/Papyrus.h
+	src/Extended/TESObjectREFR.h	 
+	src/Hooks/CameraState.h
 )
 
 set(SOURCES
 	src/main.cpp
 	src/Papyrus.cpp
+	src/Extended/TESObjectREFR.cpp
+	src/Hooks/CameraState.cpp
 )
 
 source_group(
