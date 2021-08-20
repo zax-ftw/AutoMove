@@ -97,7 +97,10 @@ set(HEADERS
 	src/Offsets.h
 	src/Papyrus.h
 	src/Extended/TESObjectREFR.h	 
+	src/Extended/PlacePlayerMarkerCallbackFunctor.h 
+	src/Extended/FastTravelConfirmCallback.h
 	src/Hooks/CameraState.h
+	src/Hooks/MessageBox.h
 )
 
 set(SOURCES
@@ -105,6 +108,7 @@ set(SOURCES
 	src/Papyrus.cpp
 	src/Extended/TESObjectREFR.cpp
 	src/Hooks/CameraState.cpp
+	src/Hooks/MessageBox.cpp
 )
 
 source_group(

@@ -8,3 +8,6 @@ constexpr REL::ID ThirdPersonState_HandleRotationX{ 49907 };		// 0x0084d3c0
 
 constexpr REL::ID TESObjectREFR_GetCurrentSpeed { 36932 };			// 0x00608c60
 constexpr REL::ID TESObjectREFR_SetAngleX{ 36602 };					// 0x005edd50
+
+constexpr REL::ID PlacePlayerMarkerCallbackFunctor_Vtbl{ 551967 };	// 0x016c3568
+constexpr REL::ID FastTravelConfirmCallback_Vtbl{ 551969 };			// 0x016c3598
