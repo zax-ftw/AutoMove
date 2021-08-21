@@ -1,5 +1,6 @@
 #include "Hooks\CameraState.h"
 #include "Hooks\MessageBox.h"
+#include "Serialization.h"
 #include "Papyrus.h"
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
@@ -50,6 +51,12 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 
 	auto papyrus = SKSE::GetPapyrusInterface();
 	papyrus->Register(Papyrus::RegisterFuncs);
+
+	auto serialization = SKSE::GetSerializationInterface();
+	serialization->SetUniqueID(Serialization::kAutoWalk);
+	serialization->SetSaveCallback(Serialization::SaveCallback);
+	serialization->SetLoadCallback(Serialization::LoadCallback);
+	serialization->SetRevertCallback(Serialization::RevertCallback);
 
 	CameraStateHook::Install();
 	PlaceMarkerHook::Install();
