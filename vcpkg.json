@@ -1,8 +1,8 @@
 {
-  "name": "auto-walk",
+  "name": "auto-move",
   "version-string": "1.2.0",
-  "description": "Makes the player walk to custom destination using AI pathfinding",
-  "homepage": "https://github.com/zax-ftw/AutoWalk",
+  "description": "Makes the player move to custom destination using AI pathfinding",
+  "homepage": "https://github.com/zax-ftw/AutoMove",
   "license": "MIT",
   "dependencies": [
     "boost-atomic",

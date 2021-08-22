@@ -51,11 +51,11 @@ namespace Papyrus
 
 	bool RegisterFuncs(BSScript::IVirtualMachine* a_vm)
 	{
-		a_vm->RegisterFunction("ForceDestinationMarkerIntoAliasID", "AutoWalk", ForceDestinationMarkerIntoAliasID);
-		a_vm->RegisterFunction("IsCustomDestinationActive", "AutoWalk", IsCustomDestinationActive);
-		a_vm->RegisterFunction("RegisterForCustomMarkerChange", "AutoWalk", RegisterForCustomMarkerChange);
-		a_vm->RegisterFunction("UnregisterForCustomMarkerChange", "AutoWalk", UnregisterForCustomMarkerChange);
-		a_vm->RegisterFunction("GetCurrentMount", "AutoWalk", GetCurrentMount);		
+		a_vm->RegisterFunction("ForceDestinationMarkerIntoAliasID", "AutoMove", ForceDestinationMarkerIntoAliasID);
+		a_vm->RegisterFunction("IsCustomDestinationActive", "AutoMove", IsCustomDestinationActive);
+		a_vm->RegisterFunction("RegisterForCustomMarkerChange", "AutoMove", RegisterForCustomMarkerChange);
+		a_vm->RegisterFunction("UnregisterForCustomMarkerChange", "AutoMove", UnregisterForCustomMarkerChange);
+		a_vm->RegisterFunction("GetCurrentMount", "AutoMove", GetCurrentMount);		
 
 		logger::info("Papyrus functions registered");
 

@@ -31,7 +31,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL" CACHE 
 # ---- Project ----
 
 project(
-	AutoWalk
+	AutoMove
 	VERSION 1.2.0
 	LANGUAGES CXX
 )
