@@ -1,5 +1,6 @@
 #include "Hooks\CameraState.h"
 #include "Hooks\MessageBox.h"
+#include "Hooks\AutoMove.h"
 #include "Serialization.h"
 #include "Papyrus.h"
 
@@ -60,6 +61,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 
 	CameraStateHook::Install();
 	PlaceMarkerHook::Install();
+	AutoMoveHook::Install();
 
 	return true;
 }

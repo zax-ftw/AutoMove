@@ -103,6 +103,7 @@ set(HEADERS
 	src/Extended/FastTravelConfirmCallback.h
 	src/Hooks/CameraState.h
 	src/Hooks/MessageBox.h
+	src/Hooks/AutoMove.h
 )
 
 set(SOURCES
@@ -113,6 +114,7 @@ set(SOURCES
 	src/Extended/TESObjectREFR.cpp
 	src/Hooks/CameraState.cpp
 	src/Hooks/MessageBox.cpp
+	src/Hooks/AutoMove.cpp
 )
 
 source_group(
