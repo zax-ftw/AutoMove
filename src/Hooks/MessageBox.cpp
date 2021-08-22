@@ -23,12 +23,12 @@ void FastTravelHook::Run(FastTravelConfirmCallback* a_this, Message a_msg)
 
 void PlaceMarkerHook::Install()
 {
-	Relocation<std::uintptr_t> vtbl{ PlacePlayerMarkerCallbackFunctor_Vtbl };
-	_Run = vtbl.write_vfunc(0x2, Run);
+	Relocation<std::uintptr_t> vtbl{ RE::Offset::PlacePlayerMarkerCallbackFunctor::Vtbl };
+	_Run = vtbl.write_vfunc(0x1, Run);
 };
 
 void FastTravelHook::Install()
 {
-	Relocation<std::uintptr_t> vtbl{ FastTravelConfirmCallback_Vtbl };
-	_Run = vtbl.write_vfunc(0x2, Run);
+	Relocation<std::uintptr_t> vtbl{ RE::Offset::FastTravelConfirmCallback::Vtbl };
+	_Run = vtbl.write_vfunc(0x1, Run);
 };

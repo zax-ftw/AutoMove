@@ -27,14 +27,14 @@ void CameraStateHook::ModAngleX_Hook(float angle)
 
 void CameraStateHook::Install()
 {
-	REL::Relocation<std::uintptr_t> GetCurrentSpeed_Call1{ DragonCameraState_UpdateRotation, 0x92 };
-	REL::Relocation<std::uintptr_t> GetCurrentSpeed_Call2{ HorseCameraState_UpdateRotation, 0x84 };
-	REL::Relocation<std::uintptr_t> GetCurrentSpeed_Call3{ ThirdPersonState_SetFreeRotationMode, 0x43 };
+	REL::Relocation<std::uintptr_t> GetCurrentSpeed_Call1{ RE::Offset::DragonCameraState::UpdateRotation, 0x92 };
+	REL::Relocation<std::uintptr_t> GetCurrentSpeed_Call2{ RE::Offset::HorseCameraState::UpdateRotation, 0x84 };
+	REL::Relocation<std::uintptr_t> GetCurrentSpeed_Call3{ RE::Offset::ThirdPersonState::SetFreeRotationMode, 0x43 };
 
-	REL::Relocation<std::uintptr_t> GetAngleX_Call1{ HorseCameraState_HandleLookInput, 0x97 };
-//	REL::Relocation<std::uintptr_t> GetAngleX_Call2{ ThirdPersonState_HandleRotationX, 0x20C };
-//	REL::Relocation<std::uintptr_t> SetAngleX_Call1{ ThirdPersonState_HandleRotationX, 0x217 };
-	REL::Relocation<std::uintptr_t> ModAngleX_Call1{ ThirdPersonState_HandleRotationX, 0x1FD };
+	REL::Relocation<std::uintptr_t> GetAngleX_Call1{ RE::Offset::HorseCameraState::HandleLookInput, 0x97 };
+//	REL::Relocation<std::uintptr_t> GetAngleX_Call2{ RE::Offset::ThirdPersonState::HandleRotationX, 0x20C };
+//	REL::Relocation<std::uintptr_t> SetAngleX_Call1{ RE::Offset::ThirdPersonState::HandleRotationX, 0x217 };
+	REL::Relocation<std::uintptr_t> ModAngleX_Call1{ RE::Offset::ThirdPersonState::HandleRotationX, 0x1FD };
 
 	auto& trampoline = SKSE::GetTrampoline();
 
