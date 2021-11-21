@@ -4,7 +4,7 @@ namespace Serialization
 {
 	constexpr uint32_t kVersion = 1;
 
-	enum : std::uint32_t
+	enum : uint32_t
 	{
 		kAutoWalk = 'ATMV',
 

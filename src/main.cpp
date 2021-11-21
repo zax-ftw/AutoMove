@@ -6,8 +6,7 @@
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
 {
-	char file[50];
-	sprintf_s(file, sizeof(file), "%s.log", PLUGIN_NAME);
+	std::string file = fmt::format("{}.log", PLUGIN_NAME);
 
 	auto path = logger::log_directory().value() / file;
 	auto log = spdlog::basic_logger_mt("logger", path.string(), true);

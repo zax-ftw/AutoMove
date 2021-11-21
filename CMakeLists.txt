@@ -89,6 +89,7 @@ else ()
 endif ()
 
 find_package(spdlog REQUIRED CONFIG)
+find_package(fmt REQUIRED CONFIG)
 
 # ---- Add source files ----
 
@@ -161,6 +162,7 @@ target_link_libraries(
 	PRIVATE
 		CommonLibSSE::CommonLibSSE
 		spdlog::spdlog
+		fmt::fmt
 )
 
 if (MSVC)

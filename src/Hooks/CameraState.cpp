@@ -46,6 +46,4 @@ void CameraStateHook::Install()
 //	trampoline.write_call<5>(GetAngleX_Call2.address(), &CameraStateHook::GetAngleX_Hook);
 //	trampoline.write_call<5>(SetAngleX_Call1.address(), &CameraStateHook::SetAngleX_Hook);
 	trampoline.write_call<5>(ModAngleX_Call1.address(), &CameraStateHook::ModAngleX_Hook);
-
-	logger::info("Camera hooks installed");
 }

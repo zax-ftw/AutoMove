@@ -3,9 +3,9 @@
 
 namespace Serialization
 {
-	std::string DecodeTypeCode(std::uint32_t a_typeCode)
+	std::string DecodeTypeCode(uint32_t a_typeCode)
 	{
-		constexpr std::size_t SIZE = sizeof(std::uint32_t);
+		constexpr std::size_t SIZE = sizeof(uint32_t);
 
 		std::string sig;
 		sig.resize(SIZE);
@@ -27,9 +27,7 @@ namespace Serialization
 
 	void LoadCallback(SKSE::SerializationInterface* a_intfc)
 	{
-		std::uint32_t type;
-		std::uint32_t version;
-		std::uint32_t length;
+		uint32_t type, version, length;
 
 		while (a_intfc->GetNextRecordInfo(type, version, length)) {
 			if (version != kVersion) {
